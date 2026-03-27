@@ -1,68 +1,27 @@
-/**
- * Project: Ultrasonic Proximity Alarm
- * Author: Hasan
- * Description: Measures distance using HC-SR04 and triggers a buzzer 
- * with variable frequency based on distance.
- */
+# Arduino Ultrasonic Radar & Proximity Alarm
 
-// Pin Definitions
-const int trigPin = 12;    // White cable
-const int echoPin = 13;    // Yellow cable
-const int buzzerPin = 8;   // Orange cable (+)
+This project uses an **HC-SR04 Ultrasonic Sensor** and a **Buzzer** to create a proximity-based alarm system. It measures the distance to an object and triggers an audible alert that increases in frequency as the object gets closer—similar to a car's parking sensor.
 
-void setup() {
-  // Initialize Serial communication for debugging
-  Serial.begin(9600);
-  
-  // Set pin modes
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-  pinMode(buzzerPin, OUTPUT);
-  
-  // Startup sound indicator
-  digitalWrite(buzzerPin, HIGH);
-  delay(100);
-  digitalWrite(buzzerPin, LOW);
-  
-  Serial.println("System Initialized...");
-}
+## 🛠 Features
+- Real-time distance measurement in centimeters.
+- Dynamic audio feedback (Beep frequency increases as distance decreases).
+- Serial Monitor integration for debugging and data logging.
 
-void loop() {
-  long duration, distance;
+## 🔌 Components & Wiring
+| Component | Arduino Pin | Description |
+| :--- | :--- | :--- |
+| **HC-SR04 VCC** | 5V | Power Supply |
+| **HC-SR04 GND** | GND | Ground |
+| **HC-SR04 Trig** | Pin 12 | Trigger Signal (Output) |
+| **HC-SR04 Echo** | Pin 13 | Echo Signal (Input) |
+| **Buzzer (+)** | Pin 8 | Audio Output |
+| **Buzzer (-)** | GND | Ground |
 
-  // Clear the trigPin
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
+## 🚀 How it Works
+The sensor sends an ultrasonic pulse (40kHz) which travels through the air. If there is an object or obstacle in its path, it will bounce back to the sensor. By calculating the travel time and the speed of sound, the distance is determined using the formula:
+$$Distance = \frac{Time \times Speed\ of\ Sound}{2}$$
 
-  // Trigger the sensor by sending a 10us high pulse
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-
-  // Read the echoPin, returns the sound wave travel time in microseconds
-  duration = pulseIn(echoPin, HIGH);
-
-  // Calculating the distance (Speed of sound is ~343m/s or 0.0343 cm/us)
-  distance = (duration / 2) / 29.1;
-
-  // Print distance to Serial Monitor
-  Serial.print("Object Distance: ");
-  Serial.print(distance);
-  Serial.println(" cm");
-
-  // Alarm Logic: Trigger if object is closer than 40cm
-  if (distance > 0 && distance < 40) {
-    digitalWrite(buzzerPin, HIGH);
-    delay(50); // Short beep
-    digitalWrite(buzzerPin, LOW);
-    
-    // Dynamic delay: Beeping speeds up as the object gets closer
-    int beepDelay = distance * 8; 
-    if(beepDelay < 20) beepDelay = 20; // Minimum delay for rapid beeping
-    delay(beepDelay); 
-  } else {
-    // Standard idle delay when no object is detected
-    digitalWrite(buzzerPin, LOW);
-    delay(200);
-  }
-}
+## 💻 Setup
+1. Connect the components as shown in the wiring table.
+2. Upload the `proximity_alarm.ino` code to your Arduino Uno.
+3. Open the Serial Monitor (9600 baud) to see live distance data.
