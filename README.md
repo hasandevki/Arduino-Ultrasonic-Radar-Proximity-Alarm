@@ -7,8 +7,8 @@ This project uses an **HC-SR04 Ultrasonic Sensor** and a **Buzzer** to create a 
 - Dynamic audio feedback (Beep frequency increases as distance decreases).
 - Serial Monitor integration for debugging and data logging.
 
-## Components & Wiring
 | Component | Arduino Pin | Description |
+| :--- | :--- | :--- |
 | **HC-SR04 VCC** | 5V | Power Supply |
 | **HC-SR04 GND** | GND | Ground |
 | **HC-SR04 Trig** | Pin 12 | Trigger Signal (Output) |
