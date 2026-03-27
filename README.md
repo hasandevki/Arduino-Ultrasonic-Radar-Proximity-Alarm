@@ -1,3 +1,7 @@
+![Project Photo](photo.jpeg)
+
+
+
 # Arduino Ultrasonic Radar & Proximity Alarm
 
 This project uses an **HC-SR04 Ultrasonic Sensor** and a **Buzzer** to create a proximity-based alarm system. It measures the distance to an object and triggers an audible alert that increases in frequency as the object gets closer—similar to a car's parking sensor.
